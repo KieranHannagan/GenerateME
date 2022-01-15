@@ -1,31 +1,12 @@
 // Requiring packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
-const { renderLicenseBadge, renderLicenseLink, renderLicenseSection, generateMarkdown } = require('./utils/generateMarkdown');
+const { renderLicenseBadge, renderLicenseLink, renderLicenseSection, generateMarkdown, optionalsChecker } = require('./utils/generateMarkdown');
 
-// Function to format and check if the user chooses to add contribution and tests  
-var optionalsChecker = function (option1, option2) {
-    var optionals = '';
-    if (option1 && !(option2)) {
-        optionals = `## Contributing
-${option1}`
-    } else if (!(option1) && option2) {
-        optionals = `## Tests
-${option2}`
-    } else if (option1 && option2) {
-        optionals = `## Tests
-${option2}
 
-## Contributing
-${option1}`
-    }
-
-    return optionals;
-};
 
 //  Questions for user input
-const questions = inquirer.prompt(
-    [
+   var questions = [
         {
             // Title input
             type: 'input',
@@ -154,45 +135,16 @@ const questions = inquirer.prompt(
                 }
             }
         },
-    ]).then(answers => {
+    ]
+
+    inquirer.prompt(questions).then(answers => {
 
         //checking if the user chose to add contribution and tests
         const optionals = optionalsChecker(answers.contributionGuidelines, answers.testInstructions);
 
         //template for readme file
-        const template =
-            `# ${answers.title}
+        const template = generateMarkdown(answers, optionals);
             
-## Description
-${answers.description}
-
-* [Installation](#installation)
-* [Usage](#usage)
-* [Contributing](#contributing)
-* [Test](#tests)
-* [License](#license)
-* [GitHub](#github)
-* [Email](#email)
-* [Credits](#credits)
-
-
-## Installation 
-${answers.installInstructions}
-
-## Usage 
-${answers.usageInfo}
-
-## License
-${answers.license}
-
-## GitHub
-${answers.github}
-
-## Email
-${answers.email}
-
-${optionals}
-`
         console.log(template);
         writeToFile(answers.title,template);
     }
@@ -214,3 +166,4 @@ function init() { }
 
 // Function call to initialize app
 init();
+
