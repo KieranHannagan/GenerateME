@@ -26,7 +26,6 @@ function generateMarkdown(answers, optionals) {
   * [Email](#email)
   * [Credits](#credits)
   
-  
   ## Installation 
   ${answers.installInstructions}
   
@@ -44,26 +43,27 @@ function generateMarkdown(answers, optionals) {
   
   ${optionals}
   `;
+  // optionals consists of the Testing and Contribution sections
 }
 
-// Function to format and check if the user chooses to add contribution and tests  
-function optionalsChecker(option1, option2) {
+// Function to format and check if the user adds Contribution and Testing  
+function optionalsChecker(contribution, tests) {
   var optionals = '';
-  if (option1 && !(option2)) { //only 1
+  if (contribution && !(tests)) { // only contribution
       optionals = 
       `## Contributing
-  ${option1}`
-  } else if (!(option1) && option2) { //only 2
+  ${contribution}`
+  } else if (!(contribution) && tests) { // only tests
       optionals = 
-      `## Tests 
-  ${option2}`
-  } else if (option1 && option2) { //both
+      `## tests 
+  ${tests}`
+  } else if (contribution && tests) { // both
       optionals = 
-      `## Tests 
-  ${option2}
+      `## tests 
+  ${tests}
   
   ## Contributing
-  ${option1}` 
+  ${contribution}` 
   }
 
   return optionals;
