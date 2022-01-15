@@ -55,7 +55,7 @@ const questions = inquirer.prompt(
         {
             // Installation instruction
             type: 'input',
-            message: 'please provide installation instructions:',
+            message: 'Please provide installation instructions:',
             name: 'installInstructions',
             validate: (value) => {
                 if (value) {
@@ -201,7 +201,7 @@ ${optionals}
 
 // function to write README file
 function writeToFile(fileName, data) { 
-    fs.writeFile(`./${fileName.toLowerCase().split(' ').join('')}.md`,data, (err)=>{
+    fs.writeFile(`./${fileName.toUpperCase().split(' ').join('')}.md`,data, (err)=>{
         if(err) {
             console.log(err);
         }
