@@ -1,7 +1,7 @@
 // Requiring packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
-const { renderLicenseBadge, renderLicenseLink, renderLicenseSection, generateMarkdown, optionalsChecker } = require('./utils/generateMarkdown');
+const {renderLicenseSection, generateMarkdown, optionalsChecker } = require('./utils/generateMarkdown');
 
 
 //  Questions for user input
@@ -105,7 +105,7 @@ var questions = [
         type: 'checkbox',
         name: 'license',
         message: 'Please choose your license',
-        choices: ['this one', 'that one', 'the third one']
+        choices: ['MIT', 'Mozilla', 'Apache', 'Boost', 'CCO', 'Eclipse', 'GNU GPL v3', 'GNU GPL v2', 'IBM', 'Perl', 'WTFPL']
     },
     {
         // GitHub username
@@ -141,14 +141,16 @@ inquirer.prompt(questions).then(answers => {
     //checking if the user chose to add contribution and tests
     const optionals = optionalsChecker(answers.contributionGuidelines, answers.testInstructions);
 
+    // generate license section
+    const licenseSection = renderLicenseSection(answers.license);
+
     //template for readme file
-    const template = generateMarkdown(answers, optionals);
+    const template = generateMarkdown(answers, optionals, licenseSection);
 
     console.log(template);
     writeToFile(template);
 }
 );
-
 
 // takes in the template to write README file
 function writeToFile(data) {
