@@ -1,8 +1,7 @@
 // Requiring packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
-const {renderLicenseSection, generateMarkdown, optionalsChecker } = require('./utils/generateMarkdown');
-
+const { renderLicenseSection, generateMarkdown, optionalsChecker } = require('./utils/generateMarkdown');
 
 //  Questions for user input
 var questions = [
@@ -136,22 +135,6 @@ var questions = [
     },
 ];
 
-inquirer.prompt(questions).then(answers => {
-
-    //checking if the user chose to add contribution and tests
-    const optionals = optionalsChecker(answers.contributionGuidelines, answers.testInstructions);
-
-    // generate license section
-    const licenseSection = renderLicenseSection(answers.license);
-
-    //template for readme file
-    const template = generateMarkdown(answers, optionals, licenseSection);
-
-    console.log(template);
-    writeToFile(template);
-}
-);
-
 // takes in the template to write README file
 function writeToFile(data) {
     fs.writeFile(`README.md`, data, (err) => {
@@ -162,9 +145,24 @@ function writeToFile(data) {
     })
 };
 
-// TODO: Create a function to initialize app
-function init() { }
+// Function to initialize app
+function callPrompt() {
+    inquirer.prompt(questions).then(answers => {
+
+        //checking if the user chose to add contribution and tests
+        const optionals = optionalsChecker(answers.contributionGuidelines, answers.testInstructions);
+
+        // generate license section
+        const licenseSection = renderLicenseSection(answers.license);
+
+        //template for readme file
+        const template = generateMarkdown(answers, optionals, licenseSection);
+
+        console.log(template);
+        writeToFile(template);
+    }
+    );
+}
 
 // Function call to initialize app
-init();
-
+callPrompt();

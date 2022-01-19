@@ -4,9 +4,11 @@ function renderLicenseBadge(licenseChoices) {
 
   if (licenseChoices.includes('MIT')) {
     licenseBadges.push('![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)')
+
   }
   if (licenseChoices.includes('Mozilla')) {
     licenseBadges.push('![License: MPL 2.0](https://img.shields.io/badge/License-MPL_2.0-brightgreen.svg)')
+
   }
   if (licenseChoices.includes('Apache')) {
     licenseBadges.push('![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)')
@@ -46,7 +48,7 @@ function renderLicenseBadge(licenseChoices) {
   }
   licenseBadges = licenseBadges.join(' ');
   return licenseBadges
-}
+};
 
 // license links
 function renderLicenseLink(licenseChoices) {
@@ -95,7 +97,7 @@ function renderLicenseLink(licenseChoices) {
   }
   licenseLinks = licenseLinks.join(', ');
   return licenseLinks;
-}
+};
 
 // license section of README
 // ! If there is no license, return an empty string
@@ -116,7 +118,30 @@ function renderLicenseSection(licenseChoices) {
   ${licenseLinks}`
   }
   return licenseSection;
-}
+};
+
+// Function to format and check if the user adds Contribution and Testing  
+function optionalsChecker(contribution, tests) {
+  var optionals = '';
+  if (contribution && !(tests)) { // only contribution
+    optionals =
+      `## Contributing
+  ${contribution}`
+  } else if (!(contribution) && tests) { // only tests
+    optionals =
+      `## Tests 
+  ${tests}`
+  } else if (contribution && tests) { // both
+    optionals =
+      `## Tests 
+  ${tests}
+  
+  ## Contributing
+  ${contribution}`
+  }
+
+  return optionals;
+};
 
 // Function to generate markdown for README
 function generateMarkdown(answers, optionals, licenseSection) {
@@ -154,30 +179,6 @@ function generateMarkdown(answers, optionals, licenseSection) {
   
 
   `;
-}
-
-// Function to format and check if the user adds Contribution and Testing  
-function optionalsChecker(contribution, tests) {
-  var optionals = '';
-  if (contribution && !(tests)) { // only contribution
-    optionals =
-      `## Contributing
-  ${contribution}`
-  } else if (!(contribution) && tests) { // only tests
-    optionals =
-      `## tests 
-  ${tests}`
-  } else if (contribution && tests) { // both
-    optionals =
-      `## tests 
-  ${tests}
-  
-  ## Contributing
-  ${contribution}`
-  }
-
-  return optionals;
 };
-
 
 module.exports = { generateMarkdown, renderLicenseBadge, renderLicenseLink, renderLicenseSection, optionalsChecker };
