@@ -150,6 +150,7 @@ function generateMarkdown(answers, optionals, licenseSection) {
   ## Description
   ${answers.description}
   
+  ## Table of Contents
   * [Installation](#installation)
   * [Usage](#usage)
   * [License](#license)

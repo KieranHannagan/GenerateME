@@ -158,7 +158,6 @@ function callPrompt() {
         //template for readme file
         const template = generateMarkdown(answers, optionals, licenseSection);
 
-        console.log(template);
         writeToFile(template);
     }
     );
