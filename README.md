@@ -1,4 +1,4 @@
-# This is the title
+# ReadMe Generater
           
   ## Description
   This web application allows the user to conveniently and efficiently create a professional README.md file for their project. It will prompt you on the command line a series of questions, returning your answers to a README file that it will generate. It will completely format the file for you and even include a table of Contents.
